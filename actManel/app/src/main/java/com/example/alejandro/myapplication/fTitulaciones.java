@@ -73,6 +73,7 @@ public class fTitulaciones extends Fragment implements View.OnClickListener {
         if (v.getId()==btnEmpresa.getId())
         {
             mListener.getIdBotonTitulaciones(1);
+
         }
         else if (v.getId()==btnDeportes.getId())
         {

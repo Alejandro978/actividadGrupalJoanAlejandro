@@ -57,10 +57,10 @@ public class fCiclos extends Fragment implements View.OnClickListener {
         View v = inflater.inflate(R.layout.fragment_f_ciclos, container, false);
 
         btnMedio = (Button) v.findViewById(R.id.btnMedio);
-        btnMedio.setOnClickListener(this);
+
 
         btnSuperior = (Button) v.findViewById(R.id.btnSuperior);
-        btnSuperior.setOnClickListener(this);
+
 
         if (parametro1 == 1) {
             btnMedio.setEnabled(true);
@@ -73,7 +73,8 @@ public class fCiclos extends Fragment implements View.OnClickListener {
         } else {
             btnSuperior.setEnabled(false);
         }
-
+        btnMedio.setOnClickListener(this);
+        btnSuperior.setOnClickListener(this);
         return v;
     }
 

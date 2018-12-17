@@ -51,14 +51,14 @@ public class listadoCiclos extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_listado_ciclos, container, false);
-
+        tvInfoCiclo = v.findViewById(R.id.tvInfoCiclos);
         recorremosArray();
 
         return v;
     }
  public void recorremosArray(){
 
-
+     tvInfoCiclo.setText("");
      if (mParam2!=null)
      {
          for(int i=0;i<mParam2.size();i++) {

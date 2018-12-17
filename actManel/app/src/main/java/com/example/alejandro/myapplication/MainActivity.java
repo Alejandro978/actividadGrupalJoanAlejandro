@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -46,96 +47,6 @@ public class MainActivity extends AppCompatActivity implements fTitulaciones.fCo
 
 }
 
-    @Override
-    public void getIdBotonCiclos(int id) {
-        ft= fm.beginTransaction();
-
-        fragment3= listadoCiclos.newInstance(id,newArray);
-        ft.replace(R.id.listadoCiclos,fragment3);
-
-        ft.commit();
-    }
-
-    @Override
-    public void getIdBotonTitulaciones(int id) {
-        recorrerArray(id);
-        ft= fm.beginTransaction();
-
-        fragment2 = fCiclos.newInstance(btn1,btn2);
-        ft.replace(R.id.fCiclos,fragment2);
-
-        ft.commit();
-        btn1 = 1;
-        btn2 = 2;
-    }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
-
-    public void recorrerArray(int id)
-    {
-
-        newArray = new ArrayList<CicleFlorida>();
-        switch (id){
-            case 1:
-                for (CicleFlorida aux: newArray)
-                {
-                    if (aux.getFamiliaProfessional() == "EMPRESA")
-                    {
-
-                        if (aux.getTipus()=="Mitjà")
-                        {
-
-                            btn1 = 1;
-                        }
-                        if (aux.getTipus()=="Superior")
-                        {
-
-                            btn2 = 1;
-                        }
-                        newArray.add(aux);
-                    }
-                }
-                break;
-
-            case 2:
-                for (CicleFlorida aux: newArray)
-                {
-                    if (aux.getFamiliaProfessional() == "ESPORT")
-                    {
-                        if (aux.getTipus()=="Mitjà")
-                        {
-                            btn1 = 1;
-                        }
-                        if (aux.getTipus()=="Superior")
-                        {
-                            btn2 = 2;
-                        }
-                        newArray.add(aux);
-                    }
-                }
-                break;
-            case 3:
-                for (CicleFlorida aux: newArray)
-                {
-                    if (aux.getFamiliaProfessional() == "INFORMÀTICA")
-                    {
-                        if (aux.getTipus()=="Mitjà")
-                        {
-                            btn1 = 1;
-                        }
-                        if (aux.getTipus()=="Superior")
-                        {
-                            btn2 = 2;
-                        }
-                        newArray.add(aux);
-                    }
-                }
-                break;
-        }
-    }
     public void creaDades(){
         CicleFlorida c;
 
@@ -158,4 +69,96 @@ public class MainActivity extends AppCompatActivity implements fTitulaciones.fCo
         c = new CicleFlorida("INFORMÀTICA","Superior","Desarrollo de Aplicaciones Web","ste NUEVO Ciclo Formativo de Grado Superior privado te forma como profesional de la informática y las comunicaciones, especializado en el desarrollo, implantación y mantenimiento de aplicaciones web");
         arrayCiclosFlorida.add(c);
     }
+
+    @Override
+    public void getIdBotonCiclos(int id) {
+        ft= fm.beginTransaction();
+
+        fragment3= listadoCiclos.newInstance(id,newArray);
+        ft.replace(R.id.listadoCiclos,fragment3);
+
+        ft.commit();
+    }
+
+    @Override
+    public void getIdBotonTitulaciones(int id) {
+        recorrerArray(id);
+        ft= fm.beginTransaction();
+
+        fragment2 = fCiclos.newInstance(btn1,btn2);
+        ft.replace(R.id.fCiclos,fragment2);
+
+        ft.commit();
+        btn1 = 0;
+        btn2 = 0;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
+    public void recorrerArray(int id)
+    {
+
+        newArray = new ArrayList<CicleFlorida>();
+        switch (id){
+            case 1:
+                for (CicleFlorida aux: newArray)
+                {
+                    if (aux.getFamiliaProfessional() == "EMPRESA")
+                    {
+
+                        if (aux.getTipus()=="Mitjà")
+                        {
+
+                            btn1 = 0;
+                        }
+                        if (aux.getTipus()=="Superior")
+                        {
+
+                            btn2 = 0;
+                        }
+                        newArray.add(aux);
+                    }
+                }
+                break;
+
+            case 2:
+                for (CicleFlorida aux: newArray)
+                {
+                    if (aux.getFamiliaProfessional() == "ESPORT")
+                    {
+                        if (aux.getTipus()=="Mitjà")
+                        {
+                            btn1 = 0;
+                        }
+                        if (aux.getTipus()=="Superior")
+                        {
+                            btn2 = 0;
+                        }
+                        newArray.add(aux);
+                    }
+                }
+                break;
+            case 3:
+                for (CicleFlorida aux: newArray)
+                {
+                    if (aux.getFamiliaProfessional() == "INFORMÀTICA")
+                    {
+                        if (aux.getTipus()=="Mitjà")
+                        {
+                            btn1 = 0;
+                        }
+                        if (aux.getTipus()=="Superior")
+                        {
+                            btn2 = 0;
+                        }
+                        newArray.add(aux);
+                    }
+                }
+                break;
+        }
+    }
+
 }
