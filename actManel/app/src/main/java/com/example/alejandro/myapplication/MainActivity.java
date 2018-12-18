@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity implements fTitulaciones.fCo
     Fragment fragment3;
 
     ArrayList<CicleFlorida> arrayCiclosFlorida;
-    ArrayList <CicleFlorida> newArray;
+
 
     int btn1, btn2;
 
@@ -28,22 +28,24 @@ public class MainActivity extends AppCompatActivity implements fTitulaciones.fCo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         arrayCiclosFlorida = new ArrayList<CicleFlorida>();
+
+        creaDades(); //Omplim l'arrayCiclosFlorida
+
         btn1 = 1;
         btn2 = 2;
         fm = getSupportFragmentManager();
-        fragment2 = fCiclos.newInstance(btn1,btn2);
-        fragment3= listadoCiclos.newInstance(0,null);
+
         fragment1 = (fTitulaciones) fm.findFragmentById(R.id.fTitulaciones);
 
         ft= fm.beginTransaction();
 
-        ft.replace(R.id.fCiclos,fragment2);
-        ft.replace(R.id.listadoCiclos,fragment3);
+        ft.replace(R.id.fTitulaciones,fragment1);
 
         ft.commit();
 
-        creaDades();
+
 
 }
 
@@ -71,10 +73,20 @@ public class MainActivity extends AppCompatActivity implements fTitulaciones.fCo
     }
 
     @Override
-    public void getIdBotonCiclos(int id) {
+    public void filtraPerGrau(ArrayList<CicleFlorida> elsCicles, String grauAFiltrar) {
+        ArrayList <CicleFlorida> arrayFitltratPerTitulacioiGrau =new ArrayList<CicleFlorida>();
+
+        for (CicleFlorida aux: elsCicles) {
+            if (aux.getTipus() == grauAFiltrar) {
+                arrayFitltratPerTitulacioiGrau.add(aux);
+            }
+
+        }
+
+
         ft= fm.beginTransaction();
 
-        fragment3= listadoCiclos.newInstance(id,newArray);
+        fragment3= listadoCiclos.newInstance(arrayFitltratPerTitulacioiGrau);
         ft.replace(R.id.listadoCiclos,fragment3);
 
         ft.commit();
@@ -82,10 +94,17 @@ public class MainActivity extends AppCompatActivity implements fTitulaciones.fCo
 
     @Override
     public void getIdBotonTitulaciones(int id) {
-        recorrerArray(id);
+        ArrayList<CicleFlorida> arrayFitltratPerTitulacio =new ArrayList<CicleFlorida>();
+        int numBotonsAMostrarEnFragment2;
+
+        // Filtrem tots el ciclesde Florida per a buscar només els d'una titulacio (id)
+        arrayFitltratPerTitulacio=recorrerArray(id);
+        //Del llistat de cicles d'una titulacio, averigüem si hi ha mitja o superior
+        numBotonsAMostrarEnFragment2 = hayCicloMedioOSuperior(arrayFitltratPerTitulacio);
+
         ft= fm.beginTransaction();
 
-        fragment2 = fCiclos.newInstance(btn1,btn2);
+        fragment2 = fCiclos.newInstance(arrayFitltratPerTitulacio,numBotonsAMostrarEnFragment2);
         ft.replace(R.id.fCiclos,fragment2);
 
         ft.commit();
@@ -98,67 +117,76 @@ public class MainActivity extends AppCompatActivity implements fTitulaciones.fCo
 
     }
 
-    public void recorrerArray(int id)
-    {
 
+
+    public int hayCicloMedioOSuperior(ArrayList<CicleFlorida> arrayOnBuscare){
+        boolean botoMitja=false, botoSuperior=false;
+
+        for (CicleFlorida aux: arrayOnBuscare)
+        {
+                if (aux.getTipus()=="Mitjà")
+                {
+
+                    botoMitja = true;
+                }
+                if (aux.getTipus()=="Superior")
+                {
+
+                    botoSuperior = true;
+                }
+        }
+
+        if(botoMitja&&botoSuperior) return 3;
+        if(botoMitja&&!botoSuperior) return 1;
+        if(!botoMitja&&botoSuperior) return 2;
+        return 0;
+
+
+    }
+    public ArrayList<CicleFlorida> buscaInfo(String titulacio){
+        boolean botoMitja=false, botoSuperior=false;
+        ArrayList <CicleFlorida> arrayFitltratPerTitulacio =new ArrayList<CicleFlorida>();
+
+        for (CicleFlorida aux: arrayCiclosFlorida)
+        {
+            if (aux.getFamiliaProfessional() == titulacio)
+            {
+
+                if (aux.getTipus()=="Mitjà")
+                {
+
+                    botoMitja = true;
+                }
+                if (aux.getTipus()=="Superior")
+                {
+
+                    botoSuperior = true;
+                }
+                arrayFitltratPerTitulacio.add(aux);
+            }
+        }
+        return arrayFitltratPerTitulacio;
+    }
+
+    public  ArrayList <CicleFlorida> recorrerArray(int id)
+    {
+        ArrayList <CicleFlorida> newArray;
         newArray = new ArrayList<CicleFlorida>();
         switch (id){
             case 1:
-                for (CicleFlorida aux: newArray)
-                {
-                    if (aux.getFamiliaProfessional() == "EMPRESA")
-                    {
-
-                        if (aux.getTipus()=="Mitjà")
-                        {
-
-                            btn1 = 0;
-                        }
-                        if (aux.getTipus()=="Superior")
-                        {
-
-                            btn2 = 0;
-                        }
-                        newArray.add(aux);
-                    }
-                }
+                newArray= buscaInfo("EMPRESA");
                 break;
 
             case 2:
-                for (CicleFlorida aux: newArray)
-                {
-                    if (aux.getFamiliaProfessional() == "ESPORT")
-                    {
-                        if (aux.getTipus()=="Mitjà")
-                        {
-                            btn1 = 0;
-                        }
-                        if (aux.getTipus()=="Superior")
-                        {
-                            btn2 = 0;
-                        }
-                        newArray.add(aux);
-                    }
-                }
+                newArray=buscaInfo("ESPORT");
                 break;
             case 3:
-                for (CicleFlorida aux: newArray)
-                {
-                    if (aux.getFamiliaProfessional() == "INFORMÀTICA")
-                    {
-                        if (aux.getTipus()=="Mitjà")
-                        {
-                            btn1 = 0;
-                        }
-                        if (aux.getTipus()=="Superior")
-                        {
-                            btn2 = 0;
-                        }
-                        newArray.add(aux);
-                    }
-                }
+                newArray= buscaInfo("INFORMÀTICA");
                 break;
         }
+
+        return newArray;
     }
+
 
 }

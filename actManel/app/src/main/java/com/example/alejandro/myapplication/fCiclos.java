@@ -9,14 +9,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import java.util.ArrayList;
+
 
 public class fCiclos extends Fragment implements View.OnClickListener {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_PARAM1 = "llistat de Cicles";
+    private static final String ARG_PARAM2 = "num botons a mostrat";
 
-    private int parametro1;
-    private int parametro2;
+    private ArrayList<CicleFlorida> llistatCicles1;
+    private int botonsDeGrau;
     private Button btnMedio;
     private Button btnSuperior;
 
@@ -32,11 +34,11 @@ public class fCiclos extends Fragment implements View.OnClickListener {
 
 
     // TODO: Rename and change types and number of parameters
-    public static fCiclos newInstance(int param1, int param2) {
+    public static fCiclos newInstance(ArrayList<CicleFlorida> llistatCicles, int numBotons) {
         fCiclos fragment = new fCiclos();
         Bundle args = new Bundle();
-        args.putInt(ARG_PARAM1, param1);
-        args.putInt(ARG_PARAM2, param2);
+        args.putParcelableArrayList(ARG_PARAM1, llistatCicles);
+        args.putInt(ARG_PARAM2, numBotons);
         fragment.setArguments(args);
         return fragment;
     }
@@ -45,8 +47,8 @@ public class fCiclos extends Fragment implements View.OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            parametro1 = getArguments().getInt(ARG_PARAM1);
-            parametro2 = getArguments().getInt(ARG_PARAM2);
+            llistatCicles1 = getArguments().getParcelableArrayList(ARG_PARAM1);
+            botonsDeGrau = getArguments().getInt(ARG_PARAM2);
         }
     }
 
@@ -62,17 +64,20 @@ public class fCiclos extends Fragment implements View.OnClickListener {
         btnSuperior = (Button) v.findViewById(R.id.btnSuperior);
 
 
-        if (parametro1 == 1) {
+        if (botonsDeGrau == 1) {
             btnMedio.setEnabled(true);
-        } else {
-            btnMedio.setEnabled(false);
-        }
-
-        if (parametro2 == 2) {
-            btnSuperior.setEnabled(true);
-        } else {
             btnSuperior.setEnabled(false);
         }
+
+        if (botonsDeGrau == 2) {
+            btnSuperior.setEnabled(true);
+            btnMedio.setEnabled(false);
+        }
+        if (botonsDeGrau == 3) {
+            btnSuperior.setEnabled(true);
+            btnMedio.setEnabled(true);
+        }
+
         btnMedio.setOnClickListener(this);
         btnSuperior.setOnClickListener(this);
         return v;
@@ -99,16 +104,16 @@ public class fCiclos extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if(v.getId() == btnMedio.getId()) {
-            mListener.getIdBotonCiclos(1);
+            mListener.filtraPerGrau(llistatCicles1,"Mitjà");
         }
         else if (v.getId() == btnSuperior.getId()){
-            mListener.getIdBotonCiclos(2);
+            mListener.filtraPerGrau(llistatCicles1,"Superior");
         }
     }
 
 
     public interface fComunicaCiclos {
         // TODO: Update argument type and name
-        void getIdBotonCiclos(int id);
+        void filtraPerGrau(ArrayList<CicleFlorida> arrayCicles, String grau);
     }
 }

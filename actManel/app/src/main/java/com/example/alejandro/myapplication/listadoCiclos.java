@@ -14,8 +14,8 @@ import java.util.ArrayList;
 
 public class listadoCiclos extends Fragment {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+
+    private static final String ARG_PARAM2 = "llistat cicles filtrat final";
 
     private TextView tvInfoCiclo;
     // TODO: Rename and change types of parameters
@@ -29,10 +29,9 @@ public class listadoCiclos extends Fragment {
     }
 
 
-    public static listadoCiclos newInstance(int param1, ArrayList<CicleFlorida> param2) {
+    public static listadoCiclos newInstance(ArrayList<CicleFlorida> param2) {
         listadoCiclos fragment = new listadoCiclos();
         Bundle args = new Bundle();
-        args.putInt(ARG_PARAM1, param1);
         args.putParcelableArrayList(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
@@ -42,7 +41,7 @@ public class listadoCiclos extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getInt(ARG_PARAM1);
+
             mParam2 = getArguments().getParcelableArrayList(ARG_PARAM2);
         }
     }
@@ -62,14 +61,9 @@ public class listadoCiclos extends Fragment {
      if (mParam2!=null)
      {
          for(int i=0;i<mParam2.size();i++) {
-             if (mParam1 ==1 && mParam2.get(i).getTipus()=="Mitjà")
-             {
+
                  tvInfoCiclo.setText(tvInfoCiclo.getText()+mParam2.get(i).toString()+"\n"+"\n");
-             }
-             else if(mParam1==2 && mParam2.get(i).getTipus()=="Superior")
-             {
-                 tvInfoCiclo.setText(tvInfoCiclo.getText()+mParam2.get(i).toString()+"\n"+"\n");
-             }
+
          }
      }
  }
