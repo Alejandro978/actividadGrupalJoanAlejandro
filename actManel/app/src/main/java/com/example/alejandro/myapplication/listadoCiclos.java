@@ -4,6 +4,8 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,12 @@ public class listadoCiclos extends Fragment {
     private int mParam1;
     private ArrayList<CicleFlorida> mParam2;
 
+    ArrayList<CicleFlorida> listadoCiclos;
+    //CREAMOS LINEAR LAYOUT MANAGER PARA EL RECYCLER VIEW
+    LinearLayoutManager llm;
+    RecyclerView rv;
+
+    adaptadorListadoCiclos alc;
     private OnFragmentInteractionListener mListener;
 
     public listadoCiclos() {
@@ -40,6 +48,9 @@ public class listadoCiclos extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        listadoCiclos = new ArrayList<CicleFlorida>();
+
         if (getArguments() != null) {
 
             mParam2 = getArguments().getParcelableArrayList(ARG_PARAM2);
@@ -50,23 +61,29 @@ public class listadoCiclos extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_listado_ciclos, container, false);
-        tvInfoCiclo = v.findViewById(R.id.tvInfoCiclos);
-        recorremosArray();
+        /*recorremosArray();*/
+        //       tvInfoCiclo = v.findViewById(R.id.tvInfoCiclos);
+        rv = v.findViewById(R.id.rvListado);
+        llm = new LinearLayoutManager(v.getContext(),1,false);
+        rv.setLayoutManager(llm);
+        alc = new adaptadorListadoCiclos(mParam2);
+        rv.setAdapter(alc);
+
 
         return v;
     }
- public void recorremosArray(){
 
-     tvInfoCiclo.setText("");
-     if (mParam2!=null)
-     {
-         for(int i=0;i<mParam2.size();i++) {
+   /* public void recorremosArray() {
 
-                 tvInfoCiclo.setText(tvInfoCiclo.getText()+mParam2.get(i).toString()+"\n"+"\n");
+        tvInfoCiclo.setText("");
+        if (mParam2 != null) {
+            for (int i = 0; i < mParam2.size(); i++) {
 
-         }
-     }
- }
+                tvInfoCiclo.setText(tvInfoCiclo.getText() + mParam2.get(i).toString() + "\n" + "\n");
+
+            }
+        }
+    }*/
 
 
     @Override

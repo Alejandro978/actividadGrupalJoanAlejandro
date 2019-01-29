@@ -5,18 +5,9 @@
     android:layout_height="match_parent"
     tools:context=".listadoCiclos">
 
-    <!-- TODO: Update blank fragment layout -->
-
-    <ScrollView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvListado"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/tvInfoCiclos"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text=""/>
-    </ScrollView>
-
+        android:layout_height="match_parent" />
 
 </FrameLayout>
